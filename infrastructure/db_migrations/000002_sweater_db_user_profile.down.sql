@@ -1,0 +1,1 @@
+drop table sweater_db.user_profile;

@@ -1,0 +1,27 @@
+version: "3.9"
+services:
+  sweater_mysql:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: qwerty123
+    ports:
+      - '3306:3306'
+      - '33060:33060'
+  app:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    restart: always
+    environment:
+      DB_HOST: 'sweater_mysql'
+      DB_PORT: 3306
+      DB_NAME: 'sweater_db'
+      DB_USER: 'root'
+      DB_PASSWORD: 'qwerty123'
+      GIN_MODE: 'release'
+    ports:
+      - '8080:8080'
+    depends_on:
+      - sweater_mysql
